@@ -9,3 +9,8 @@ body {
 .bg-image{
   background-image: url("../assets/main-bg.png");
 }
+
+/* Change selected ChatItem.tsx bg-color */
+.selected-user {
+  @apply bg-sky-200;
+}

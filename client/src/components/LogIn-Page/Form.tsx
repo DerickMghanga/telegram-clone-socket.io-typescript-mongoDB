@@ -13,7 +13,7 @@ export default function Form() {
     const router = useRouter();
 
   return (
-    <form onSubmit={(e) => handleSubmit(e, router)} className="flex flex-col gap-5">
+    <form onSubmit={(e) => handleSubmit(e, router, avatarId)} className="flex flex-col gap-5">
         {/* AVATAR */}
         <Avatar avatarId={avatarId} setAvatarId={setAvatarId} />
 
