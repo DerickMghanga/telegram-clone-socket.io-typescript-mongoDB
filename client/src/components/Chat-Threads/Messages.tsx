@@ -4,6 +4,7 @@ import React from 'react'
 import Topbar from './Topbar'
 import { useSelectedUser } from '@/store/userStore'
 import MessageList from './MessageList'
+import MessageInput from './MessageInput'
 
 const Messages = () => {
 
@@ -15,12 +16,13 @@ const Messages = () => {
         {/* TopBar */}
        <Topbar selectedUser = {selectedUser} />
 
-        <div className={`max-w-sm md:max-w-3xl w-full mx-auto mb-10 ${selectedUser ? " " : "md:hidden"}`}>
+        <div className={`max-w-sm md:max-w-3xl w-full mx-auto mt-auto mb-8 ${selectedUser ? " " : "md:hidden"}`}>
             {/* MESSAGES LIST */}
             <MessageList />
 
 
             {/* MESSAGES INPUT */}
+            <MessageInput />
         </div>
 
     </div>

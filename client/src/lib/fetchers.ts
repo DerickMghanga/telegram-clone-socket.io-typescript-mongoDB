@@ -51,13 +51,25 @@ export async function fetchUser(cookie: { user?: any; }, setUser: { (user: any):
 export async function fetchUsers(mySelf:userProps, setUsers:any) {
     const data = await fetch("/users"); //fetch all users from DB
     const myUsers = await data.json();
-    // console.log(myUsers);
+    // console.log({myUsers});
 
     // set users and filter myself
     setUsers(myUsers.filter((user:any)=> user.email !== mySelf?.email));
 }
 
 
-export async function fetchMessages(sender, receiver, setMessages) {
+export async function fetchMessages(sender:any, receiver:any, setMessages:any) {
+    if (sender && receiver ) {
+        try {
+            const res = await fetch(`/messages?sender=${sender?.email}&receiver=${receiver?.email}`);
+            const data = await res?.json();
+            // console.log({data});
 
+            setMessages(data);
+
+        } catch (err) {
+            console.log(err);
+            setMessages(null);
+        }
+    }
 }

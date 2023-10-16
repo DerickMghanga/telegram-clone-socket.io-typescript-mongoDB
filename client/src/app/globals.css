@@ -10,6 +10,16 @@ body {
   background-image: url("../assets/main-bg.png");
 }
 
+/* Dont show scroll bar but keeps its functionality */
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
 /* Change selected ChatItem.tsx bg-color */
 .selected-user {
   @apply bg-sky-200;

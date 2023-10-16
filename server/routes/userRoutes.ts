@@ -12,7 +12,7 @@ router.post("/auth", async(req:Request, res:Response) => {
 
     try {
         await user.save();  //save to DB
-        console.log(user);
+        // console.log(user);
 
         const accessToken = jwt.sign(user.toObject(), process.env.ACCESS_TOKEN_SECRET!);
 
@@ -57,6 +57,19 @@ router.get("/user", async(req:Request, res:Response) => {
         console.log(err);
     }
 })
+
+
+router.get("/messages", async(req:Request, res:Response) => {
+    console.log(req.query);
+    const {sender, receiver} = req.query;
+
+    const user = await User.find({email: receiver});
+
+    const filteredUser = user[0]?.messages?.filter((message:any) => message.sender === sender && message.receiver === receiver || message.sender === receiver && message.receiver === sender);
+
+    res.send(filteredUser);
+})
+
 
 
 export default router;
