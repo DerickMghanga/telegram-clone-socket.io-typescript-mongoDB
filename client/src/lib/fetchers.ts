@@ -3,7 +3,7 @@ import { AppRouterInstance } from "next/dist/shared/lib/app-router-context.share
 
 
 //Login to chat app
-export async function handleSubmit (e:any, router: AppRouterInstance, avatarId:string) {
+export async function handleSubmit (e:any, router: AppRouterInstance, avatarId:string, socket:any) {
     e.preventDefault();
 
     try {
@@ -17,7 +17,9 @@ export async function handleSubmit (e:any, router: AppRouterInstance, avatarId:s
             headers: {
                 "Content-Type":"application/json",
             }
-        })
+        });
+
+        socket.emit("joined", "new user");  //trigger event
 
         router.push('/chat');
         

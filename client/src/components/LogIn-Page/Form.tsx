@@ -1,9 +1,11 @@
 "use client";
 
-import React, {useState} from 'react'
+import React, {useEffect, useState} from 'react'
 import Avatar from './Avatar'
 import { handleSubmit } from '@/lib/fetchers';   //function
 import { useRouter } from 'next/navigation';
+import { io } from 'socket.io-client';
+import { useCookies } from 'react-cookie';
 
 
 export default function Form() {
@@ -12,8 +14,19 @@ export default function Form() {
 
     const router = useRouter();
 
+    const socket = io("http://localhost:4000");  //refresh list after a new user joined
+
+    const [cookie] = useCookies(["user"]);
+
+    useEffect(() => {
+        if(cookie.user) {
+            router.push("/chat");
+        }
+
+    }, [cookie.user]);
+
   return (
-    <form onSubmit={(e) => handleSubmit(e, router, avatarId)} className="flex flex-col gap-5">
+    <form onSubmit={(e) => handleSubmit(e, router, avatarId, socket)} className="flex flex-col gap-5">
         {/* AVATAR */}
         <Avatar avatarId={avatarId} setAvatarId={setAvatarId} />
 

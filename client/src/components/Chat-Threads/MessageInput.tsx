@@ -23,7 +23,7 @@ const MessageInput = () => {
 
     const selectedUser = useSelectedUser((state) => state.selectedUser);  //from states store
 
-    const socket = io("http://localhost:4000");  // to Backend server
+    const socket = io("http://localhost:4000");  // to Backend server(socket)
 
     function handleSubmit(e: { preventDefault: () => void; }) {
         e.preventDefault();

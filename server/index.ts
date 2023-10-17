@@ -42,6 +42,12 @@ const io = new Server(server, {
 })
 
 io.on("connection", (socket) => {
+
+    //refresh user list after a new user joined
+    socket.on("joined", () => {
+        io.sockets.emit("new-user", "new user joined");
+    })
+
     socket.on("private message", async(to, message, mySelf) => {
         const user = await User.find({ email:to });  //send to
 
@@ -49,7 +55,6 @@ io.on("connection", (socket) => {
 
         const sender = await User.findById(decoded);  //me
 
-        io.sockets.emit("refresh", "new Message");
 
         if (user) {
             user[0].messages.push({   
@@ -68,6 +73,8 @@ io.on("connection", (socket) => {
 
             await user[0].save();  //update reciever userSchema
             await sender?.save();  //update sender userSchema
+
+            io.sockets.emit("refresh", "new Message");  //triger refresh in MessagesList.tsx after updating
         }
     })
 })

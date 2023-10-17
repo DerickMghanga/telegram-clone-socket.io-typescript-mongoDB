@@ -6,10 +6,20 @@ import { fetchUsers } from '@/lib/fetchers'
 import { useAllUsers } from '@/store/userStore'
 import { shallow } from 'zustand/shallow'
 import ChatItem from './ChatItem'
+import { io } from 'socket.io-client'
 
 const ChatList = ({mySelf}:{mySelf:userProps}) => {
 
     const {users, setUsers} = useAllUsers((state:any) => ({users: state.users, setUsers: state.setUsers}), shallow);
+
+    //auto-refresh Chat list after a new user joined
+    useEffect(() => {
+        const socket = io("http://localhost:4000"); //backend server(socket)
+        socket.on("new-user", () => {
+        fetchUsers(mySelf, setUsers);
+    })
+    }, []);
+    
 
     useEffect(() => {
         fetchUsers(mySelf, setUsers);
