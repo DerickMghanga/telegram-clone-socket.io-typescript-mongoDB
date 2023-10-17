@@ -6,6 +6,7 @@ import { useAutoAnimate } from '@formkit/auto-animate/react';
 import React, {useEffect} from 'react'
 import shallow from 'zustand/shallow';
 import MessageItem from './MessageItem';
+import { io } from 'socket.io-client';
 
 
 const MessageList = () => {
@@ -20,16 +21,23 @@ const MessageList = () => {
 
     const [parent] = useAutoAnimate();
 
+    //Refresh Messages list >> Make it Real Time
+    const socket = io("http://localhost:4000");
+    socket.on("refresh", () => {
+      fetchMessages(sender, receiver, setMessages);
+    })
+
+
     useEffect(() => {
        fetchMessages(sender, receiver, setMessages);
     }, [receiver])
     
 
   return (
-    <div ref={parent} className='w-full mb-10 flex flex-col max-h-[75vh] overflow-auto no-scrollbar'>
+    <div ref={parent} className='w-full mb-5 flex flex-col max-h-[75vh] overflow-auto no-scrollbar'>
       {
         messages ? (
-          messages.map((item:any, i:number) => {
+          messages.map((item:any, i:number) => (
 
             //Message Item
               <MessageItem key={i} 
@@ -37,8 +45,7 @@ const MessageList = () => {
                 message={item.message} 
               />
             
-          })
-        ) : (" ")
+          ))) : (" ")
       }
     </div>
   )

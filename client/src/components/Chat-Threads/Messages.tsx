@@ -16,7 +16,7 @@ const Messages = () => {
         {/* TopBar */}
        <Topbar selectedUser = {selectedUser} />
 
-        <div className={`max-w-sm md:max-w-3xl w-full mx-auto mt-auto mb-8 ${selectedUser ? " " : "md:hidden"}`}>
+        <div className={`max-w-sm md:max-w-3xl w-full mx-auto mt-auto mb-5 ${selectedUser ? " " : "md:hidden"}`}>
             {/* MESSAGES LIST */}
             <MessageList />
 
